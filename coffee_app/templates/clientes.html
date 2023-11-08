@@ -1,0 +1,24 @@
+<!-- templates/clientes.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenidoquecambia %}
+{% block title %}
+<h2>Ingrese Cliente</h2>
+<p></p>
+{% endblock %}
+
+{% block content %}
+{% if formcliente.error %}
+<p style="color: red">Estan mal los datos, revisar</p>
+{% endif %}
+<form action="/clientes/"   method="post">{% csrf_token %}
+    <p> Nombre: <input type="text" name="nombre">
+    <p> Email: <input type="text" name="email"> 
+    <p> Telefono: <input type="text" name="telefono"> 
+    <input type="submit" value="Enviar">
+    </form>
+{% endblock %}
+
+{% endblock contenidoquecambia %}

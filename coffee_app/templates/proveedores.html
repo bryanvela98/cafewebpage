@@ -1,0 +1,26 @@
+<!-- templates/proveedores.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenidoquecambia %}
+{% block title %}
+<h2>Ingrese Proveedor</h2>
+<p></p>
+{% endblock title %}
+
+{% block content %}
+
+{% if formproveedor.errors %}
+<p style="color: red">Estan mal los datos, revisar</p>
+{% endif %}
+
+<form action="/proveedores/"   method="post">{% csrf_token %}
+    <table>
+        {{formproveedor.as_table}}
+    </table>
+    <input type="submit" value="Enviar">
+</form>
+{% endblock content %}
+
+{% endblock contenidoquecambia %}
