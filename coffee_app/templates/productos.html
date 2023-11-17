@@ -4,12 +4,35 @@
 {% load static %}
 
 {% block contenidoquecambia %}
-{% block title %}
-<h2>Ingrese Producto</h2>
-<p></p>
+{% block content %}
+  <h2>Lista de Productos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pro in productos %}
+        <tr>
+          <td>{{ pro.nombre }}</td>
+          <td>{{ pro.descripcion }}</td>
+          <td>S/.{{ pro.precio }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p></p>
 {% endblock %}
 
-{% block content %}
+{% block title2 %}
+<h2>Ingrese Nuevo Producto</h2>
+<p></p>
+{% endblock title2 %}
+
+{% block content2 %}
 
 {% if formproducto.errors %}
 <p style="color: red">Estan mal los datos, revisar</p>
@@ -22,6 +45,6 @@
 
     <input type="submit" value="Enviar">
 </form>
-{% endblock %}
+{% endblock content2 %}
 
 {% endblock contenidoquecambia %}

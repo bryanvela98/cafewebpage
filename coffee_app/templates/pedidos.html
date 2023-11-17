@@ -4,11 +4,35 @@
 {% load static %}
 
 {% block contenidoquecambia %}
+{% block content %}
+  <h2>Lista de Pedidos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Fecha de Pedido</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pedi in pedidos %}
+        <tr>
+          <td>{{ pedi.cliente}}</td>
+          <td>{{ pedi.producto}}&nbsp;</td>
+          <td>{{ pedi.cantidad}}</td>
+          <td>{{ pedi.fecha_pedido}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p></p>
+{% endblock %}
 {% block title %}
-<h2>Ingrese Pedido</h2>
+<h2>Ingrese Nuevo Pedido</h2>
 <p></p>
 {% endblock title %}
-{% block content %}
+{% block content2 %}
 {% if formpedido.error %}
 <p style="color: red">Estan mal los datos, revisar</p>
 {% endif %}
@@ -19,5 +43,5 @@
 
     <input type="submit" value="Enviar">
 </form>
-{% endblock content %}
+{% endblock content2 %}
 {% endblock contenidoquecambia %}

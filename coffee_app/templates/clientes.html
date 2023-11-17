@@ -4,12 +4,34 @@
 {% load static %}
 
 {% block contenidoquecambia %}
+{% block content %}
+  <h2>Lista de Clientes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Telefono</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cli in clientes %}
+        <tr>
+          <td>{{ cli.nombre }}</td>
+          <td>{{ cli.email }}</td>
+          <td>+51 {{ cli.telefono }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p></p>
+{% endblock %}
 {% block title %}
-<h2>Ingrese Cliente</h2>
+<h2>Ingrese Nuevo Cliente</h2>
 <p></p>
 {% endblock %}
 
-{% block content %}
+{% block content2 %}
 {% if formcliente.error %}
 <p style="color: red">Estan mal los datos, revisar</p>
 {% endif %}

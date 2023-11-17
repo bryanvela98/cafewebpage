@@ -4,12 +4,36 @@
 {% load static %}
 
 {% block contenidoquecambia %}
+{% block content1 %}
+  <h2>Lista de Proveedores</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Direccion</th>
+        <th>Telefono</th>
+        <th>Productos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prove in proveedores %}
+        <tr>
+          <td>{{ prove.nombre}}</td>
+          <td>{{ prove.direccion}}&nbsp;</td>
+          <td>{{ prove.telefono}}</td>
+          <td>{{ prove.productos}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p></p>
+{% endblock %}
 {% block title %}
-<h2>Ingrese Proveedor</h2>
+<h2>Ingrese Nuevo Proveedor</h2>
 <p></p>
 {% endblock title %}
 
-{% block content %}
+{% block content2 %}
 
 {% if formproveedor.errors %}
 <p style="color: red">Estan mal los datos, revisar</p>
@@ -21,6 +45,6 @@
     </table>
     <input type="submit" value="Enviar">
 </form>
-{% endblock content %}
+{% endblock content2 %}
 
 {% endblock contenidoquecambia %}
