@@ -13,6 +13,7 @@
         <th>Direccion</th>
         <th>Telefono</th>
         <th>Productos</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +22,23 @@
           <td>{{ prove.nombre}}</td>
           <td>{{ prove.direccion}}&nbsp;</td>
           <td>{{ prove.telefono}}</td>
-          <td>{{ prove.productos}}</td>
+          <td>
+            {% for producto in prove.productos.all %}
+              {{ producto.nombre }}
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            <!-- Mueve el formulario dentro del bucle -->
+            <form method="post" action="{% url 'eliminar_proveedor' prove.id %}">
+              {% csrf_token %}
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+          <td>
+            <!-- Agrega un enlace para la acción de editar -->
+            <a href="{% url 'editar_proveedor' prove.id %}">Editar</a>
+        </td>
         </tr>
       {% endfor %}
     </tbody>

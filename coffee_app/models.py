@@ -7,7 +7,7 @@ class Producto(models.Model):
     
     def __str__(self) -> str:
         
-        return f"Nombre: {self.nombre} - Descripción: {self.descripcion} - Precio: {self.precio}"
+        return f"{self.nombre} - Descripción: {self.descripcion} - Precio: {self.precio}"
     
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ class Cliente(models.Model):
 
 class Pedido(models.Model):
     cliente = models.CharField(max_length=100)
-    producto = models.CharField(max_length=100)
+    producto = models.ManyToManyField(Producto)
     cantidad = models.IntegerField()
     fecha_pedido = models.DateField()
     
@@ -37,3 +37,5 @@ class Proveedor(models.Model):
     def __str__(self) -> str:
         
         return f"Nombre: {self.nombre} - Direccion: {self.direccion} - Telefono: {self.telefono} - Productos: {self.productos}"
+    
+    

@@ -12,6 +12,7 @@
         <th>Nombre</th>
         <th>Email</th>
         <th>Telefono</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,17 @@
           <td>{{ cli.nombre }}</td>
           <td>{{ cli.email }}</td>
           <td>+51 {{ cli.telefono }}</td>
+          <td>
+            <!-- Mueve el formulario dentro del bucle -->
+            <form method="post" action="{% url 'eliminar_cliente' cli.id %}">
+              {% csrf_token %}
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+          <td>
+            <!-- Agrega un enlace para la acción de editar -->
+            <a href="{% url 'editar_cliente' cli.id %}">Editar</a>
+        </td>
         </tr>
       {% endfor %}
     </tbody>
@@ -36,11 +48,12 @@
 <p style="color: red">Estan mal los datos, revisar</p>
 {% endif %}
 <form action="/clientes/"   method="post">{% csrf_token %}
-    <p> Nombre: <input type="text" name="nombre">
-    <p> Email: <input type="text" name="email"> 
-    <p> Telefono: <input type="text" name="telefono"> 
-    <input type="submit" value="Enviar">
-    </form>
+  <table>
+      {{formcliente.as_table}}
+  </table>
+
+  <input type="submit" value="Enviar">
+</form>
 {% endblock %}
 
 {% endblock contenidoquecambia %}

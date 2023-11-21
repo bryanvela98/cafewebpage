@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenidoquecambia %}
+  {% block content %}
+    <h2>Editar Pedido</h2>
+    <form method="post" action="{% url 'editar_pedido' pedido.id %}">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+      </table>
+        <input type="submit" value="Guardar Cambios">
+    </form>
+  {% endblock %}
+{% endblock contenidoquecambia %}

@@ -23,3 +23,4 @@ class ProveedorForm(forms.ModelForm):
 
 class BusquedaForm(forms.Form):
     termino_busqueda = forms.CharField(max_length=100, label='Buscar')
+    

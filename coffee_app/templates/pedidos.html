@@ -13,15 +13,32 @@
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Fecha de Pedido</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       {% for pedi in pedidos %}
         <tr>
           <td>{{ pedi.cliente}}</td>
-          <td>{{ pedi.producto}}&nbsp;</td>
+          <td>
+            {% for producto in pedi.producto.all %}
+              {{ producto.nombre }}
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
           <td>{{ pedi.cantidad}}</td>
           <td>{{ pedi.fecha_pedido}}</td>
+          <td>
+            <!-- Mueve el formulario dentro del bucle -->
+            <form method="post" action="{% url 'eliminar_pedido' pedi.id %}">
+              {% csrf_token %}
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+          <td>
+            <!-- Agrega un enlace para la acción de editar -->
+            <a href="{% url 'editar_pedido' pedi.id %}">Editar</a>
+        </td>
         </tr>
       {% endfor %}
     </tbody>
@@ -36,12 +53,19 @@
 {% if formpedido.error %}
 <p style="color: red">Estan mal los datos, revisar</p>
 {% endif %}
-<form action="/pedidos/"   method="post">{% csrf_token %}
+<form action="/pedidos/" method="post">{% csrf_token %}
     <table>
-        {{formpedido.as_table}}
+        {{ formpedido.as_table }}
     </table>
 
     <input type="submit" value="Enviar">
 </form>
+
+<!-- Agrega el script para inicializar el datepicker -->
+<script>
+  $( function() {
+    $( "#id_fecha_pedido" ).datepicker();
+  } );
+</script>
 {% endblock content2 %}
 {% endblock contenidoquecambia %}

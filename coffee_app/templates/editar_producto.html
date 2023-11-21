@@ -1,0 +1,17 @@
+<!-- templates/editar_producto.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenidoquecambia %}
+  {% block content %}
+    <h2>Editar Producto</h2>
+    <form method="post" action="{% url 'editar_producto' producto.id %}">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+      </table>
+        <input type="submit" value="Guardar Cambios">
+    </form>
+  {% endblock %}
+{% endblock contenidoquecambia %}

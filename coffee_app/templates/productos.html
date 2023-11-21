@@ -12,6 +12,7 @@
         <th>Nombre</th>
         <th>Descripción</th>
         <th>Precio</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,17 @@
           <td>{{ pro.nombre }}</td>
           <td>{{ pro.descripcion }}</td>
           <td>S/.{{ pro.precio }}</td>
+          <td>
+            <!-- Mueve el formulario dentro del bucle -->
+            <form method="post" action="{% url 'eliminar_producto' pro.id %}">
+              {% csrf_token %}
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+          <td>
+            <!-- Agrega un enlace para la acción de editar -->
+            <a href="{% url 'editar_producto' pro.id %}">Editar</a>
+        </td>
         </tr>
       {% endfor %}
     </tbody>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto, Cliente, Pedido, Proveedor
 from .forms import *
 
@@ -14,10 +14,11 @@ def form_productos(request):
         
         if formproducto.is_valid():
             formproducto.save()  # Guarda los datos del formulario en la base de datos
-            return render(request, 'base.html')
+            return redirect('productos')
     else:
         formproducto=ProductoForm()
-        return render(request, 'productos.html', {'formproducto': formproducto, 'productos':productos})
+        
+    return render(request, 'productos.html', {'formproducto': formproducto, 'productos':productos})
         
     
 
@@ -30,10 +31,11 @@ def form_clientes(request):
         
         if formcliente.is_valid():
             formcliente.save()  # Guarda los datos del formulario en la base de datos
-            return render(request, 'base.html')
+            return redirect('clientes')
     else:
         formcliente=ClienteForm()
-        return render(request, 'clientes.html', {'formcliente': formcliente,'clientes':clientes})
+    
+    return render(request, 'clientes.html', {'formcliente': formcliente,'clientes':clientes})    
     
 def form_pedidos(request):
     pedidos = Pedido.objects.all()
@@ -44,10 +46,11 @@ def form_pedidos(request):
         
         if formpedido.is_valid():
             formpedido.save()  # Guarda los datos del formulario en la base de datos
-            return render(request, 'base.html')
+            return redirect('pedidos')
     else:
         formpedido=PedidoForm()
-        return render(request, 'pedidos.html', {'formpedido': formpedido,'pedidos':pedidos})
+    
+    return render(request, 'pedidos.html', {'formpedido': formpedido,'pedidos':pedidos})
     
 
 def form_proveedores(request):
@@ -59,10 +62,11 @@ def form_proveedores(request):
         
         if formproveedor.is_valid():
             formproveedor.save()  # Guarda los datos del formulario en la base de datos
-            return render(request, 'base.html')
+            return redirect('proveedores')
     else:
         formproveedor=ProveedorForm()
-        return render(request, 'proveedores.html', {'formproveedor': formproveedor,'proveedores':proveedores})
+        
+    return render(request, 'proveedores.html', {'formproveedor': formproveedor,'proveedores':proveedores})
     
 
 def resultados_busqueda(request):
@@ -75,3 +79,103 @@ def resultados_busqueda(request):
     else:
         form = BusquedaForm()
     return render(request, 'busqueda.html', {'form': form})
+
+def eliminar_producto(request, producto_id):
+    # Obtener el objeto Producto por ID o mostrar una página 404 si no existe
+    producto = get_object_or_404(Producto, pk=producto_id)
+
+    if request.method == 'POST':
+        # Confirmar la eliminación del producto
+        producto.delete()
+        return redirect('productos')  # Puedes redirigir a la página de visualización de productos o a donde desees
+
+    # Si no es una solicitud POST, renderizar la plantilla de confirmación de eliminación
+    return render(request, 'eliminar_producto.html', {'producto': producto})
+
+def eliminar_cliente(request, cliente_id):
+    # Obtener el objeto Producto por ID o mostrar una página 404 si no existe
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+
+    if request.method == 'POST':
+        # Confirmar la eliminación del producto
+        cliente.delete()
+        return redirect('clientes')  # Puedes redirigir a la página de visualización de productos o a donde desees
+
+    # Si no es una solicitud POST, renderizar la plantilla de confirmación de eliminación
+    return render(request, 'eliminar_cliente.html', {'cliente': cliente})
+
+def eliminar_pedido(request, pedido_id):
+    # Obtener el objeto Producto por ID o mostrar una página 404 si no existe
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+
+    if request.method == 'POST':
+        # Confirmar la eliminación del producto
+        pedido.delete()
+        return redirect('pedidos')  # Puedes redirigir a la página de visualización de productos o a donde desees
+
+    # Si no es una solicitud POST, renderizar la plantilla de confirmación de eliminación
+    return render(request, 'eliminar_pedido.html', {'pedido': pedido})
+
+def eliminar_proveedor(request, proveedor_id):
+    # Obtener el objeto Producto por ID o mostrar una página 404 si no existe
+    proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
+
+    if request.method == 'POST':
+        # Confirmar la eliminación del producto
+        proveedor.delete()
+        return redirect('proveedores')  # Puedes redirigir a la página de visualización de productos o a donde desees
+
+    # Si no es una solicitud POST, renderizar la plantilla de confirmación de eliminación
+    return render(request, 'eliminar_pedido.html', {'proveedor': proveedor})
+
+def editar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('productos')
+    else:
+        form = ProductoForm(instance=producto)
+
+    return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
+
+def editar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('clientes')
+    else:
+        form = ClienteForm(instance=cliente)
+
+    return render(request, 'editar_cliente.html', {'form': form, 'cliente': cliente})
+
+def editar_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id)
+    
+    if request.method == 'POST':
+        form = PedidoForm(request.POST, instance=pedido)
+        if form.is_valid():
+            form.save()
+            return redirect('pedidos')
+    else:
+        form = PedidoForm(instance=pedido)
+
+    return render(request, 'editar_pedido.html', {'form': form, 'pedido': pedido})
+
+def editar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST, instance=proveedor)
+        if form.is_valid():
+            form.save()
+            return redirect('proveedores')
+    else:
+        form = ProveedorForm(instance=proveedor)
+
+    return render(request, 'editar_proveedor.html', {'form': form, 'proveedor': proveedor})
