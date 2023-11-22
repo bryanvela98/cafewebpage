@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto, Cliente, Pedido, Proveedor
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
 from .forms import *
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 def inicio(request):
     return render(request, 'base.html')
@@ -179,3 +184,27 @@ def editar_proveedor(request, proveedor_id):
         form = ProveedorForm(instance=proveedor)
 
     return render(request, 'editar_proveedor.html', {'form': form, 'proveedor': proveedor})
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Inicio de sesión exitoso.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Credenciales inválidas. Por favor, inténtelo de nuevo.')
+        return super().form_invalid(form)
+
+class CustomRegisterView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Registro exitoso. Ahora puedes iniciar sesión.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Error en el registro. Por favor, inténtelo de nuevo.')
+        return super().form_invalid(form)

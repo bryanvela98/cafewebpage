@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block contenidoquecambia %}
+{% block content %}
+    <div class="container register-container">
+        <h2 class="text-center">Registro de Usuario</h2>
+        <form method="post" action="{% url 'register' %}" class="register-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% endblock contenidoquecambia %}

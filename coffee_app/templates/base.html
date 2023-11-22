@@ -23,7 +23,6 @@
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
-
             <div class="container">
                 <a class="navbar-brand" href={% url 'inicio' %}>Inicio</a>
                 <a class="navbar-brand" href={% url 'productos' %}>Productos</a>
@@ -31,6 +30,15 @@
                 <a class="navbar-brand" href={% url 'pedidos' %}>Pedidos</a>
                 <a class="navbar-brand" href={% url 'proveedores' %}>Proveedores</a>
             </div>
+            <ul>
+                <!-- Otras opciones de navegación aquí -->
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Registro</a></li>  <!-- Agregar esta línea -->
+                {% endif %}
+            </ul>
         </nav>
         <!-- Masthead-->
         <header class="masthead">

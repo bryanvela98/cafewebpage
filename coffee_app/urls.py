@@ -1,5 +1,9 @@
 from django.urls import path
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+from .views import CustomLoginView
 from . import views
+from .views import CustomRegisterView
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -16,4 +20,9 @@ urlpatterns = [
     path('editar_cliente/<int:cliente_id>/', views.editar_cliente, name='editar_cliente'),
     path('editar_pedido/<int:pedido_id>/', views.editar_pedido, name='editar_pedido'),
     path('editar_proveedor/<int:proveedor_id>/', views.editar_proveedor, name='editar_proveedor'),
-]
+    #login y logout
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    #registro
+    path('register/', CustomRegisterView.as_view(), name='register'),
+    ]

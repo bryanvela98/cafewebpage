@@ -128,3 +128,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'coffee_app', 'static'),
 ]
+
+LOGIN_REDIRECT_URL = 'inicio'  # Cambia 'inicio' por la URL a la que quieres redirigir después del login
+LOGOUT_REDIRECT_URL = 'inicio'  # Cambia 'inicio' por la URL a la que quieres redirigir después del logout
+
+LANGUAGE_CODE = 'es'
