@@ -129,7 +129,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'coffee_app', 'static'),
 ]
 
-LOGIN_REDIRECT_URL = 'inicio'  # Cambia 'inicio' por la URL a la que quieres redirigir después del login
-LOGOUT_REDIRECT_URL = 'inicio'  # Cambia 'inicio' por la URL a la que quieres redirigir después del logout
+LOGIN_REDIRECT_URL = 'productos'  # Cambia 'inicio' por la URL a la que quieres redirigir después del login
+LOGOUT_REDIRECT_URL = 'productos'  # Cambia 'inicio' por la URL a la que quieres redirigir después del logout
 
 LANGUAGE_CODE = 'es'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')

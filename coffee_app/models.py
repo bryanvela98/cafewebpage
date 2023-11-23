@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
@@ -39,3 +41,9 @@ class Proveedor(models.Model):
         return f"Nombre: {self.nombre} - Direccion: {self.direccion} - Telefono: {self.telefono} - Productos: {self.productos}"
     
     
+class Avatar(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    imagen=models.ImageField(upload_to='avatares',null=True,blank=True)
+    
+    def __str__(self) -> str:
+        return f"{self.user} - {self.imagen}"

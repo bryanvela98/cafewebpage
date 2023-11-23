@@ -1,9 +1,12 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from .views import CustomLoginView
 from . import views
 from .views import CustomRegisterView
+
+#para las imagenes
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -26,3 +29,5 @@ urlpatterns = [
     #registro
     path('register/', CustomRegisterView.as_view(), name='register'),
     ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
