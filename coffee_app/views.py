@@ -6,6 +6,14 @@ from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from .models import Avatar
+from django.views.generic import TemplateView
+
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
+from .forms import CustomUserChangeForm
 
 def inicio(request):
     return render(request, 'base.html')
@@ -208,3 +216,36 @@ class CustomRegisterView(CreateView):
     def form_invalid(self, form):
         messages.error(self.request, 'Error en el registro. Por favor, inténtelo de nuevo.')
         return super().form_invalid(form)
+    
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = CustomUserChangeForm
+    template_name = 'profile_edit.html'
+    success_url = reverse_lazy('profile_edit')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        avatar_instance, created = Avatar.objects.get_or_create(user=self.request.user)
+        context['avatar_form'] = AvatarForm(instance=avatar_instance)
+        return context
+
+    def form_valid(self, form):
+        avatar_instance, created = Avatar.objects.get_or_create(user=self.request.user)
+        avatar_form = AvatarForm(self.request.POST, self.request.FILES, instance=avatar_instance)
+        
+        if avatar_form.is_valid():
+            avatar_form.save()
+
+        messages.success(self.request, 'Perfil actualizado exitosamente.')
+        return super().form_valid(form)
+    
+class AcercaDeMiView(TemplateView):
+    template_name = 'acerca_de_mi.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['descripcion'] = "¡Hola! Soy Bryan, un ingeniero mecatrónico de 25 años con una fascinación por la integración de la mecánica, la electrónica y la informática para crear soluciones innovadoras. Mi formación me ha proporcionado habilidades sólidas en el diseño de sistemas inteligentes, pero mi verdadera pasión se encuentra en el mundo de la programación. Dejo un enlace a mi LinkedIn para poder generar una conexión"
+        return context

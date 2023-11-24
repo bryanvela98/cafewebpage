@@ -86,39 +86,14 @@
     <header class="masthead">
         <div class="container position-relative">
             <div class="row justify-content-center">
-                <div class="col-xl-6">
                     <div class="text-center text-white">
                         <!-- Page heading-->
                         <h1 class="mb-5">Route 777 Coffee Co.</h1>
-                        <!-- Signup form-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
-                        <form action="/busqueda/" method="post" class="row g-3 needs-validation" novalidate>
-                            {% csrf_token %}
-                            <!-- Nombre del producto input -->
-                            <div class="col">
-                                <input class="form-control form-control-lg" name="termino_busqueda" type="text" placeholder="Buscar Producto" required>
-                                <div class="invalid-feedback text-white">El nombre del producto es obligatorio.</div>
-                            </div>
-                            <!-- Botón de envío -->
-                            <div class="col-auto">
-                                <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
-                            </div>
-                        </form>
                     </div>
-                </div>
             </div>
         </div>
     </header>
-
-    <!-- esto es lo que cambia-->
     {% block contenidoquecambia %}
-
     {% endblock contenidoquecambia %}
     <!-- Footer-->
     <footer class="footer bg-light">

@@ -1,32 +1,36 @@
-{% extends 'base.html' %}
-
+{% extends 'base2.html' %}
+{% load static %}
 {% block contenidoquecambia %}
-{% block content %}
-    <div class="container login-container">
-        <h2 class="text-center">Iniciar Sesión</h2>
+  {% block content %}
+    <div class="container login-container mt-5">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+          <h2 class="text-center mb-3">Iniciar Sesión</h2>
 
-        {% if messages %}
+          {% if messages %}
             <div class="alert alert-danger">
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
+              <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
             </div>
-        {% endif %}
+          {% endif %}
 
-        <form method="post" action="{% url 'login' %}" class="login-form">
+          <form method="post" action="{% url 'login' %}" class="login-form">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Usuario</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Ingresa tu usuario">
+            <div class="mb-3">
+              <label for="username" class="form-label">Usuario</label>
+              <input type="text" name="username" class="form-control" id="username" placeholder="Ingresa tu usuario">
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" name="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
             </div>
             <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-        </form>
+          </form>
+        </div>
+      </div>
     </div>
-{% endblock %}
+  {% endblock %}
 {% endblock contenidoquecambia %}

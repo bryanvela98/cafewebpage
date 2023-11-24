@@ -3,10 +3,13 @@ from django.contrib.auth.views import LogoutView
 from .views import CustomLoginView
 from . import views
 from .views import CustomRegisterView
+from .views import UserProfileUpdateView
 
 #para las imagenes
 from django.conf import settings
 from django.conf.urls.static import static
+
+from .views import AcercaDeMiView
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -28,6 +31,10 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     #registro
     path('register/', CustomRegisterView.as_view(), name='register'),
+    #edicion
+    path('profile/edit/', UserProfileUpdateView.as_view(), name='profile_edit'),
+    path('acerca_de_mi/', AcercaDeMiView.as_view(), name='acerca_de_mi'),
     ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

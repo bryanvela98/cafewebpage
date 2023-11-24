@@ -1,5 +1,8 @@
 from django import forms
 from .models import Producto, Cliente, Pedido, Proveedor
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
+from .models import Avatar
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -24,3 +27,14 @@ class ProveedorForm(forms.ModelForm):
 class BusquedaForm(forms.Form):
     termino_busqueda = forms.CharField(max_length=100, label='Buscar')
     
+class CustomUserChangeForm(UserChangeForm):
+    password = None  # Excluir el campo de contraseña
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+        
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['imagen']

@@ -10917,3 +10917,19 @@ footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
+
+.avatar-img {
+  width: 10px; /* Tamaño deseado para la miniatura del avatar en la barra de navegación */
+  height: 10px;
+  border-radius: 50%; /* Para hacerlo redondo, ajusta según tus preferencias */
+  margin-right: 10px; /* Ajusta el margen según sea necesario */
+}
+
+.avatar-placeholder {
+  width: 30px; /* Tamaño del cuadrado gris si no hay avatar */
+  height: 30px;
+  background-color: #ccc; /* Color de fondo gris */
+  border-radius: 50%; /* Para hacerlo redondo, ajusta según tus preferencias */
+  margin-right: 10px; /* Ajusta el margen según sea necesario */
+}
+

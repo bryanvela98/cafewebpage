@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenidoquecambia %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="mb-4">Editar Perfil</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {{ avatar_form.as_p }}
+
+          <!-- Mostrar errores para la imagen -->
+          {% if avatar_form.errors.imagen %}
+            <div class="alert alert-danger mt-3">
+              {{ avatar_form.errors.imagen.0 }}
+            </div>
+          {% endif %}
+
+          <!-- Mostrar el avatar actual si existe -->
+          {% if avatar_form.instance.imagen %}
+            <div class="mt-3">
+              <label class="fw-bold">Avatar Actual:</label>
+              <img src="{{ avatar_form.instance.imagen.url }}" alt="Avatar" class="img-fluid rounded-circle shadow" style="width: 100px; height: 100px;">
+            </div>
+          {% endif %}
+
+          <!-- Agregar un campo para cargar una nueva imagen de avatar -->
+          <div class="mt-3">
+            <label class="fw-bold" for="id_avatar_imagen">Cambiar Avatar:</label>
+            {{ avatar_form.avatar_imagen }}
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-3">Guardar cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock contenidoquecambia %}

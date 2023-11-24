@@ -1,67 +1,71 @@
-<!-- templates/proveedores.html -->
-
 {% extends 'base.html' %}
 {% load static %}
 
 {% block contenidoquecambia %}
-{% block content1 %}
-  <h2>Lista de Proveedores</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Direccion</th>
-        <th>Telefono</th>
-        <th>Productos</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for prove in proveedores %}
-        <tr>
-          <td>{{ prove.nombre}}</td>
-          <td>{{ prove.direccion}}&nbsp;</td>
-          <td>{{ prove.telefono}}</td>
-          <td>
-            {% for producto in prove.productos.all %}
-              {{ producto.nombre }}
-              {% if not forloop.last %}, {% endif %}
-            {% endfor %}
-          </td>
-          <td>
-            <!-- Mueve el formulario dentro del bucle -->
-            <form method="post" action="{% url 'eliminar_proveedor' prove.id %}">
-              {% csrf_token %}
-              <button type="submit">Eliminar</button>
-            </form>
-          </td>
-          <td>
-            <!-- Agrega un enlace para la acción de editar -->
-            <a href="{% url 'editar_proveedor' prove.id %}">Editar</a>
-        </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <p></p>
-{% endblock %}
-{% block title %}
-<h2>Ingrese Nuevo Proveedor</h2>
-<p></p>
-{% endblock title %}
-
-{% block content2 %}
-
-{% if formproveedor.errors %}
-<p style="color: red">Estan mal los datos, revisar</p>
-{% endif %}
-
-<form action="/proveedores/"   method="post">{% csrf_token %}
-    <table>
-        {{formproveedor.as_table}}
-    </table>
-    <input type="submit" value="Enviar">
-</form>
-{% endblock content2 %}
-
+  {% block content1 %}
+    <div class="container mt-4">
+      <h2>Lista de Proveedores</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Productos</th>
+            {% if user.is_authenticated %}
+              <th>Acciones</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for prove in proveedores %}
+            <tr>
+              <td>{{ prove.nombre}}</td>
+              <td>{{ prove.direccion}}&nbsp;</td>
+              <td>{{ prove.telefono}}</td>
+              <td>
+                {% for producto in prove.productos.all %}
+                  {{ producto.nombre }}
+                  {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </td>
+              {% if user.is_authenticated %}
+                <td>
+                  <!-- Mueve el formulario dentro del bucle -->
+                  <form method="post" action="{% url 'eliminar_proveedor' prove.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                  </form>
+                </td>
+                <td>
+                  <!-- Agrega un enlace para la acción de editar -->
+                  <a href="{% url 'editar_proveedor' prove.id %}" class="btn btn-primary btn-sm">Editar</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p></p>
+    </div>
+  {% endblock %}
+  {% block title %}
+    <div class="container mt-4">
+      <h2>Ingrese Nuevo Proveedor</h2>
+    </div>
+  {% endblock title %}
+  {% block content2 %}
+    <div class="container mt-4">
+      {% if formproveedor.errors %}
+        <p style="color: red">Hay errores en los datos. Por favor, revíselos.</p>
+      {% endif %}
+      <form action="/proveedores/" method="post">
+        {% csrf_token %}
+        <table class="table">
+          {{ formproveedor.as_table }}
+        </table>
+        <button type="submit" class="btn btn-success">Enviar</button>
+      </form>
+    </div>
+  {% endblock content2 %}
 {% endblock contenidoquecambia %}

@@ -1,15 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 
 {% block contenidoquecambia %}
-  {% block content %}
+  <div class="container mt-5">
     <h2>Editar Cliente</h2>
     <form method="post" action="{% url 'editar_cliente' cliente.id %}">
-        {% csrf_token %}
-        <table>
-        {{ form.as_table }}
-      </table>
-        <input type="submit" value="Guardar Cambios">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+      </div>
+      <div class="mb-3">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+      </div>
+      <div class="mb-3">
+        {{ form.telefono.label_tag }}
+        {{ form.telefono }}
+      </div>
+      <button type="submit" class="btn btn-success">Guardar Cambios</button>
     </form>
-  {% endblock %}
+  </div>
 {% endblock contenidoquecambia %}

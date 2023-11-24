@@ -1,71 +1,79 @@
-<!-- templates/pedidos.html -->
-
 {% extends 'base.html' %}
 {% load static %}
 
 {% block contenidoquecambia %}
-{% block content %}
-  <h2>Lista de Pedidos</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Cliente</th>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Fecha de Pedido</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for pedi in pedidos %}
-        <tr>
-          <td>{{ pedi.cliente}}</td>
-          <td>
-            {% for producto in pedi.producto.all %}
-              {{ producto.nombre }}
-              {% if not forloop.last %}, {% endif %}
-            {% endfor %}
-          </td>
-          <td>{{ pedi.cantidad}}</td>
-          <td>{{ pedi.fecha_pedido}}</td>
-          <td>
-            <!-- Mueve el formulario dentro del bucle -->
-            <form method="post" action="{% url 'eliminar_pedido' pedi.id %}">
-              {% csrf_token %}
-              <button type="submit">Eliminar</button>
-            </form>
-          </td>
-          <td>
-            <!-- Agrega un enlace para la acción de editar -->
-            <a href="{% url 'editar_pedido' pedi.id %}">Editar</a>
-        </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <p></p>
-{% endblock %}
-{% block title %}
-<h2>Ingrese Nuevo Pedido</h2>
-<p></p>
-{% endblock title %}
-{% block content2 %}
-{% if formpedido.error %}
-<p style="color: red">Estan mal los datos, revisar</p>
-{% endif %}
-<form action="/pedidos/" method="post">{% csrf_token %}
-    <table>
-        {{ formpedido.as_table }}
-    </table>
+  {% block content %}
+    <div class="container mt-4">
+      <h2>Lista de Pedidos</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Fecha de Pedido</th>
+            {% if user.is_authenticated %}
+              <th>Acciones</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for pedi in pedidos %}
+            <tr>
+              <td>{{ pedi.cliente }}</td>
+              <td>
+                {% for producto in pedi.producto.all %}
+                  {{ producto.nombre }}
+                  {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </td>
+              <td>{{ pedi.cantidad }}</td>
+              <td>{{ pedi.fecha_pedido }}</td>
+              {% if user.is_authenticated %}
+                <td>
+                  <!-- Mueve el formulario dentro del bucle -->
+                  <form method="post" action="{% url 'eliminar_pedido' pedi.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                  </form>
+                </td>
+                <td>
+                  <!-- Agrega un enlace para la acción de editar -->
+                  <a href="{% url 'editar_pedido' pedi.id %}" class="btn btn-primary btn-sm">Editar</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p></p>
+    </div>
+  {% endblock %}
 
-    <input type="submit" value="Enviar">
-</form>
+  {% block title %}
+    <div class="container mt-4">
+      <h2>Ingrese Nuevo Pedido</h2>
+    </div>
+  {% endblock title %}
 
-<!-- Agrega el script para inicializar el datepicker -->
-<script>
-  $( function() {
-    $( "#id_fecha_pedido" ).datepicker();
-  } );
-</script>
-{% endblock content2 %}
+  {% block content2 %}
+    <div class="container mt-4">
+      {% if formpedido.error %}
+        <p style="color: red">Hay errores en los datos. Por favor, revíselos.</p>
+      {% endif %}
+      <form action="/pedidos/" method="post">
+        {% csrf_token %}
+        <table class="table">
+          {{ formpedido.as_table }}
+        </table>
+        <button type="submit" class="btn btn-success">Enviar</button>
+      </form>
+      <!-- Agrega el script para inicializar el datepicker -->
+      <script>
+        $(function () {
+          $("#id_fecha_pedido").datepicker();
+        });
+      </script>
+    </div>
+  {% endblock content2 %}
 {% endblock contenidoquecambia %}
