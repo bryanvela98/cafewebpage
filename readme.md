@@ -49,3 +49,7 @@ Sitio web destinado a los administradores de un pequeño emprendimiento de cafe,
 
 usuario: bvela
 pass:    desarrollo1
+
+### LINK VIDEO GUIA
+
+https://drive.google.com/file/d/1gg0Ne8VN1rZTC9NiJUez4FusVIMmxD4n/view?usp=sharing
