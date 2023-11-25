@@ -71,7 +71,11 @@
       <!-- Agrega el script para inicializar el datepicker -->
       <script>
         $(function () {
-          $("#id_fecha_pedido").datepicker();
+          $("#id_fecha_pedido").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            todayHighlight: true,
+          });
         });
       </script>
     </div>
