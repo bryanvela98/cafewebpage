@@ -1,8 +1,3 @@
-# Proyecto Final Python - Coder House
-
-Comisión: 256045
-Alumno: Bryan vela
-
 ## Mi Emprendimiento de Cafe
 
 Este proyecto de Django está relacionado a un sitio de administración de venta de Café Orgánico Artesanal.
